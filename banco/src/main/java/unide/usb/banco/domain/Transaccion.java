@@ -22,6 +22,7 @@ public class Transaccion {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    //foranea
     @ManyToOne
     @JoinColumn(name = "cuenta_id", referencedColumnName = "id", nullable = false)
     private Cuenta cuenta;
