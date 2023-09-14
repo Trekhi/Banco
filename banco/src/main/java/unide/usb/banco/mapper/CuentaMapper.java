@@ -6,17 +6,30 @@ import unide.usb.banco.dto.CuentaDTO;
 import java.util.List;
 
 public class CuentaMapper {
-    public Cuenta dtoToDomain (CuentaDTO cuentaDTO) {
+    public static Cuenta dtoToDomain (CuentaDTO cuentaDTO) {
         return Cuenta.builder()
                 .id(cuentaDTO.getId())
-                .usuario(cuentaDTO.getUsuarioid())
+                //.usuario(cuentaDTO.getUsuarioid())
                 .fondos(cuentaDTO.getFondos())
                 .fechaApertura(cuentaDTO.getFechaApertura())
                 .tipoCuenta(cuentaDTO.getTipoCuenta())
-                .build()
+                .build();
     }
-}
 
-public List<Cuenta> dtoToDomain (List<CuentaDTO> cuentaDTOS){
-    return cuentaDTOS.stream().map(CuentaMapper)
+    public static CuentaDTO domainToDto (Cuenta cuenta){
+        return CuentaDTO.builder()
+                .id(cuenta.getId())
+                //.usuarioid(cuenta.getUsuario())
+                .fondos(cuenta.getFondos())
+                .fechaApertura(cuenta.getFechaApertura())
+                .tipoCuenta(cuenta.getTipoCuenta())
+                .build();
+    }
+    public static List<Cuenta> dtoToDomainList (List<CuentaDTO> cuentaDTOS){
+        return cuentaDTOS.stream().map(CuentaMapper::dtoToDomain).toList();
+    }
+
+    public static List<CuentaDTO> domainToDtoList (List<Cuenta> cuentas){
+        return cuentas.stream().map(CuentaMapper::domainToDto).toList();
+    }
 }
