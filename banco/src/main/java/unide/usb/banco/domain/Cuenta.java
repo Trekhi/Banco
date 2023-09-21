@@ -31,9 +31,9 @@ public class Cuenta {
     private BigDecimal fondos;
 
     @Column(nullable = false, length = 100)
-    private Instant fechaApertura;
+    private Instant fechaapertura;
 
     @Column(nullable = false, length = 20)
-    private String tipoCuenta;
+    private String tipocuenta;
 
 }

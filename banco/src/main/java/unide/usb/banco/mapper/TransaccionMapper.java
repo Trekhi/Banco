@@ -12,7 +12,7 @@ public class TransaccionMapper {
                 .id(transaccionDTO.getId())
                 //.cuenta(transaccionDTO.getCuentaid())
                 .consignacion((transaccionDTO.getConsignacion()))
-                .fechaEnvio((transaccionDTO.getFechaEnvio()))
+                .fechaenvio((transaccionDTO.getFechaenvio()))
                 .build();
     }
 
@@ -21,7 +21,7 @@ public class TransaccionMapper {
                 .id(transaccion.getId())
                 //.cuentaid(transaccion.getCuenta())
                 .consignacion((transaccion.getConsignacion()))
-                .fechaEnvio((transaccion.getFechaEnvio()))
+                .fechaenvio((transaccion.getFechaenvio()))
                 .build();
     }
 

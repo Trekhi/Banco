@@ -11,8 +11,8 @@ public class CuentaMapper {
                 .id(cuentaDTO.getId())
                 //.usuario(cuentaDTO.getUsuario())
                 .fondos(cuentaDTO.getFondos())
-                .fechaApertura(cuentaDTO.getFechaApertura())
-                .tipoCuenta(cuentaDTO.getTipoCuenta())
+                .fechaapertura(cuentaDTO.getFechaapertura())
+                .tipocuenta(cuentaDTO.getTipocuenta())
                 .build();
     }
 
@@ -21,8 +21,8 @@ public class CuentaMapper {
                 .id(cuenta.getId())
                 //.usuario(cuenta.getUsuario())
                 .fondos(cuenta.getFondos())
-                .fechaApertura(cuenta.getFechaApertura())
-                .tipoCuenta(cuenta.getTipoCuenta())
+                .fechaapertura(cuenta.getFechaapertura())
+                .tipocuenta(cuenta.getTipocuenta())
                 .build();
     }
     public static List<Cuenta> dtoToDomainList (List<CuentaDTO> cuentaDTOS){

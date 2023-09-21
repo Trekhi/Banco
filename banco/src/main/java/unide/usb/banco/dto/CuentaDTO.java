@@ -19,7 +19,7 @@ public class CuentaDTO {
     private Integer id;
     private Usuario usuario;
     private BigDecimal fondos;
-    private Instant fechaApertura;
-    private String tipoCuenta;
+    private Instant fechaapertura;
+    private String tipocuenta;
 
 }

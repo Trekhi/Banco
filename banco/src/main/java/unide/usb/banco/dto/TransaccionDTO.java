@@ -19,6 +19,6 @@ public class TransaccionDTO {
     private Integer id;
     private Cuenta cuentaid;
     private BigDecimal consignacion;
-    private Instant fechaEnvio;
+    private Instant fechaenvio;
 
 }

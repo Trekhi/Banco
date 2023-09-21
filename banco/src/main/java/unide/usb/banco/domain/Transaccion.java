@@ -31,7 +31,7 @@ public class Transaccion {
     private BigDecimal consignacion;
 
     @Column(nullable = false)
-    private Instant fechaEnvio;
+    private Instant fechaenvio;
 
 
 }
