@@ -26,7 +26,7 @@ public class Usuario {
     private String telefono;
 
     @Column(nullable = false, length = 100)
-    private String dirrecion;
+    private String direccion;
 
     @Column(nullable = false, length = 50)
     private String correo;

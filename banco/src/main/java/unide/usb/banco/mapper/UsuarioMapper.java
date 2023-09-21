@@ -14,7 +14,7 @@ public class UsuarioMapper {
                 .id(usuarioDTO.getId())
                 .nombre(usuarioDTO.getNombre())
                 .telefono(usuarioDTO.getTelefono())
-                .dirrecion(usuarioDTO.getDirrecion())
+                .direccion(usuarioDTO.getDireccion())
                 .correo(usuarioDTO.getCorreo())
                 .contrasena(usuarioDTO.getContrasena())
                 .build();
@@ -25,7 +25,7 @@ public class UsuarioMapper {
                 .id(usuario.getId())
                 .nombre(usuario.getNombre())
                 .telefono(usuario.getTelefono())
-                .dirrecion(usuario.getDirrecion())
+                .direccion(usuario.getDireccion())
                 .correo(usuario.getCorreo())
                 .contrasena(usuario.getContrasena())
                 .build();
