@@ -23,8 +23,8 @@ public class UsuarioController {
         this.usuarioService = usuarioService;
     }
 
-    @GetMapping("/Guardar")
-    public ResponseEntity<UsuarioDTO> guardarUsuario(UsuarioDTO usuarioDTO) throws Exception{
+    @PostMapping("/Guardar")
+    public ResponseEntity<UsuarioDTO> guardarUsuario(@RequestBody UsuarioDTO usuarioDTO) throws Exception{
         UsuarioDTO usuarioDTO1 = usuarioService.guardarNuevoUsuario(usuarioDTO);
         return new ResponseEntity<>(usuarioDTO1, HttpStatus.OK);
     }

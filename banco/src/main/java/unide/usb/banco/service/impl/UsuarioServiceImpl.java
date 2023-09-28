@@ -27,7 +27,18 @@ public class UsuarioServiceImpl implements UsuarioService {
         {
             throw new Exception("No hay nombre");
         }
-
+        if (usuarioDTO.getTelefono() == null || usuarioDTO.getTelefono().trim().equals(""))
+        {
+            throw new Exception("No hay no");
+        }
+        if (usuarioDTO.getDireccion() == null || usuarioDTO.getDireccion().trim().equals(""))
+        {
+            throw new Exception("No hay n");
+        }
+        if (usuarioDTO.getCorreo() == null || usuarioDTO.getCorreo().trim().equals(""))
+        {
+            throw new Exception("No hay ");
+        }
         if (usuarioDTO.getContrasena()== null || usuarioDTO.getContrasena().trim().equals(""))
         {
             throw new Exception("Contraseña errada");
