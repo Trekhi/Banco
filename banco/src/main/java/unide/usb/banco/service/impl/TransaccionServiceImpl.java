@@ -9,6 +9,7 @@ import unide.usb.banco.repository.CuentaRepository;
 import unide.usb.banco.repository.TransaccionRepository;
 import unide.usb.banco.service.TransaccionService;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,13 +31,13 @@ public class TransaccionServiceImpl implements TransaccionService {
         {
             throw new Exception("La transaccion es Nula");
         }
-
-
-        if (transaccionDTO.getConsignacion()== null || transaccionDTO.getConsignacion().equals(""))
+        if(transaccionDTO.getCuentaId() == null || transaccionDTO.getCuentaId() == 0){
+            throw new Exception("No encuentra cuenta");
+        }
+        if (transaccionDTO.getConsignacion()== null || transaccionDTO.getConsignacion().equals(BigDecimal.ZERO))
         {
             throw new Exception("Consignacion no encontrado");
         }
-
         if (transaccionDTO.getFechaenvio()== null || transaccionDTO.getFechaenvio().equals(""))
         {
             throw new Exception("Fecha de envio vacio");

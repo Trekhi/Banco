@@ -23,7 +23,7 @@ public class CuentaController {
         this.cuentaRepository = cuentaRepository;
         this.cuentaService = cuentaService;
     }
-    
+
     @PostMapping("/Guardar")
     public ResponseEntity<CuentaDTO> guardarCuenta(@RequestBody CuentaDTO cuentaDTO) throws Exception{
         CuentaDTO cuentaDTO1 = cuentaService.guardarNuevaCuenta(cuentaDTO);
