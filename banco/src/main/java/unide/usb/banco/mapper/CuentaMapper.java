@@ -9,7 +9,6 @@ public class CuentaMapper {
     public static Cuenta dtoToDomain (CuentaDTO cuentaDTO) {
         return Cuenta.builder()
                 .id(cuentaDTO.getId())
-                //.usuario(cuentaDTO.getUsuario())
                 .fondos(cuentaDTO.getFondos())
                 .fechaapertura(cuentaDTO.getFechaapertura())
                 .tipocuenta(cuentaDTO.getTipocuenta())
@@ -19,7 +18,9 @@ public class CuentaMapper {
     public static CuentaDTO domainToDto (Cuenta cuenta){
         return CuentaDTO.builder()
                 .id(cuenta.getId())
-                //.usuario(cuenta.getUsuario())
+                //Foraneaa
+                .usuarioId((cuenta.getUsuario() == null ) ?
+                    null : cuenta.getUsuario().getId())
                 .fondos(cuenta.getFondos())
                 .fechaapertura(cuenta.getFechaapertura())
                 .tipocuenta(cuenta.getTipocuenta())

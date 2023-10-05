@@ -17,7 +17,7 @@ import java.time.Instant;
 
 public class TransaccionDTO {
     private Integer id;
-    private Cuenta cuentaid;
+    private Integer cuentaId;
     private BigDecimal consignacion;
     private Instant fechaenvio;
 

@@ -2,10 +2,7 @@ package unide.usb.banco.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import unide.usb.banco.domain.Cuenta;
 import unide.usb.banco.dto.CuentaDTO;
 import unide.usb.banco.mapper.CuentaMapper;
@@ -26,11 +23,16 @@ public class CuentaController {
         this.cuentaRepository = cuentaRepository;
         this.cuentaService = cuentaService;
     }
-
-    @GetMapping("/Guardar")
-    public ResponseEntity<CuentaDTO> guardarCuenta(CuentaDTO cuentaDTO) throws Exception{
+    
+    @PostMapping("/Guardar")
+    public ResponseEntity<CuentaDTO> guardarCuenta(@RequestBody CuentaDTO cuentaDTO) throws Exception{
         CuentaDTO cuentaDTO1 = cuentaService.guardarNuevaCuenta(cuentaDTO);
         return new ResponseEntity<>(cuentaDTO1, HttpStatus.OK);
+    }
+
+    @GetMapping("/Mostrar")
+    public ResponseEntity<List<CuentaDTO>> mostrarTodos(){
+        return new ResponseEntity<>(cuentaService.mostrarTodos(),HttpStatus.OK);
     }
 
     @GetMapping("/Informe")

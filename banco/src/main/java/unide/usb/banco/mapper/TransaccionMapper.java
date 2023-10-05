@@ -10,7 +10,6 @@ public class TransaccionMapper {
     public static Transaccion dtoToDomain (TransaccionDTO transaccionDTO){
         return Transaccion.builder()
                 .id(transaccionDTO.getId())
-                //.cuenta(transaccionDTO.getCuentaid())
                 .consignacion((transaccionDTO.getConsignacion()))
                 .fechaenvio((transaccionDTO.getFechaenvio()))
                 .build();
@@ -19,7 +18,9 @@ public class TransaccionMapper {
     public static TransaccionDTO domainToDto (Transaccion transaccion){
         return TransaccionDTO.builder()
                 .id(transaccion.getId())
-                //.cuentaid(transaccion.getCuenta())
+                //Para las llaves foraneas.
+                .cuentaId((transaccion.getCuenta() == null ) ?
+                    null : transaccion.getCuenta().getId())
                 .consignacion((transaccion.getConsignacion()))
                 .fechaenvio((transaccion.getFechaenvio()))
                 .build();

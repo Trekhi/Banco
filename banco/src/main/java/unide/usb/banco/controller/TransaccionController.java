@@ -2,10 +2,7 @@ package unide.usb.banco.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import unide.usb.banco.domain.Transaccion;
 import unide.usb.banco.dto.TransaccionDTO;
 import unide.usb.banco.mapper.TransaccionMapper;
@@ -27,12 +24,11 @@ public class TransaccionController {
         this.transaccionService = transaccionService1;
     }
 
-    @GetMapping("/Guardar")
-    public ResponseEntity<TransaccionDTO> guardarTransaccion(TransaccionDTO transaccionDTO) throws Exception{
+    @PostMapping("/Guardar")
+    public ResponseEntity<TransaccionDTO> guardarTransaccion(@RequestBody TransaccionDTO transaccionDTO) throws Exception{
         TransaccionDTO transaccionDTO1 = transaccionService.guardarNuevoTransaccion(transaccionDTO);
         return new ResponseEntity<>(transaccionDTO1, HttpStatus.OK);
     }
-
 
     @GetMapping("/Registro")
     public List<Transaccion> obtenerTodos(){
@@ -45,5 +41,9 @@ public class TransaccionController {
         Transaccion transaccion = transaccionRepository.getReferenceById(id);
         TransaccionDTO transaccionDTO = TransaccionMapper.domainToDto(transaccion);
         return new ResponseEntity<>(transaccionDTO, HttpStatus.OK);
+    }
+    @GetMapping("/buscarTodas")
+    public ResponseEntity<List<TransaccionDTO>> buscarTodas(){
+        return new ResponseEntity<>(transaccionService.buscarTodas(), HttpStatus.OK);
     }
 }

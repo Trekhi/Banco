@@ -17,7 +17,7 @@ import java.time.Instant;
 
 public class CuentaDTO {
     private Integer id;
-    private Usuario usuario;
+    private Integer usuarioId;
     private BigDecimal fondos;
     private Instant fechaapertura;
     private String tipocuenta;

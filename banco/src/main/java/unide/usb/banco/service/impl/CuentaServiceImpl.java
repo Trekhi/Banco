@@ -2,52 +2,76 @@ package unide.usb.banco.service.impl;
 
 import org.springframework.stereotype.Service;
 import unide.usb.banco.domain.Cuenta;
+import unide.usb.banco.domain.Usuario;
 import unide.usb.banco.dto.CuentaDTO;
 import unide.usb.banco.mapper.CuentaMapper;
 import unide.usb.banco.repository.CuentaRepository;
+import unide.usb.banco.repository.UsuarioRepository;
 import unide.usb.banco.service.CuentaService;
+
+import java.math.BigDecimal;
+import java.util.List;
+import java.util.Optional;
+
 @Service
 public class CuentaServiceImpl implements CuentaService {
 
     private final CuentaRepository cuentaRepository;
+    //Depende de otra entidad
+    private final UsuarioRepository usuarioRepository;
 
-    public CuentaServiceImpl(CuentaRepository cuentaRepository) {
+    public CuentaServiceImpl(CuentaRepository cuentaRepository, UsuarioRepository usuarioRepository) {
         this.cuentaRepository = cuentaRepository;
+        this.usuarioRepository = usuarioRepository;
     }
 
     @Override
     public CuentaDTO guardarNuevaCuenta(CuentaDTO cuentaDTO) throws Exception {
 
-        if (cuentaDTO == null)
-        {
+        if (cuentaDTO == null) {
             throw new Exception("La cuenta es Nula");
         }
-
-        if (cuentaDTO.getUsuario() == null || cuentaDTO.getUsuario().equals(""))
-        {
-            throw new Exception("No hay usuario registrado");
+        if (cuentaDTO.getUsuarioId() == null || cuentaDTO.getUsuarioId() == 0){
+            throw new Exception("no esta ligada aún Usuario");
         }
-
-        if (cuentaDTO.getFondos()== null || cuentaDTO.getFondos().equals(""))
+        if (cuentaDTO.getFondos()== null || cuentaDTO.getFondos().equals(BigDecimal.ZERO))
         {
-            throw new Exception("No tiene fondos registrados");
+            throw new Exception("Asignes la cantidad de fondos a registrar");
         }
-
-        if (cuentaDTO.getTipocuenta() == null || cuentaDTO.getTipocuenta().trim().equals(""))
-        {
-            throw new Exception("Tipo de cuenta vacia");
-        }
-
         if (cuentaDTO.getFechaapertura()== null || cuentaDTO.getFechaapertura().equals(""))
         {
             throw new Exception("Fecha de apertura vacia");
         }
+        if (cuentaDTO.getTipocuenta() == null || cuentaDTO.getTipocuenta().trim().isBlank())
+        {
+            throw new Exception("Tipo de cuenta vacia");
+        }
+
+        //Validación
+        /*
+        Optional<Cuenta> cuentaOptional = cuentaRepository.findCuentaByid(cuentaDTO.getId());
+        if(cuentaOptional.isPresent()){
+            throw new Exception(String.format("Ya esta registrado ese ID: %s", cuentaDTO.getId()));
+        }
+        */
+        //Validar Si esa cuenta esta sujeta a un usuario Obvio no?
+        Optional<Usuario> usuarioOptional = usuarioRepository.findUsuarioByid(cuentaDTO.getUsuarioId());
+        if(usuarioOptional.isEmpty()){
+            throw new Exception(String.format("No se puede registrar la cuenta si no tiene el ID usuario: %d",cuentaDTO.getUsuarioId()));
+
+        }
 
         Cuenta cuenta = CuentaMapper.dtoToDomain(cuentaDTO);
+        cuenta.setUsuario(usuarioOptional.get());
+
         cuenta = cuentaRepository.save(cuenta);
-        cuentaDTO = CuentaMapper.domainToDto(cuenta);
 
-        return cuentaDTO;
+        return CuentaMapper.domainToDto(cuenta);
 
+    }
+
+    @Override
+    public List<CuentaDTO> mostrarTodos() {
+        return CuentaMapper.domainToDtoList(cuentaRepository.findAll());
     }
 }
