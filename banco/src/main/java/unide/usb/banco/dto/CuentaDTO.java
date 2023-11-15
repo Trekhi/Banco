@@ -21,5 +21,5 @@ public class CuentaDTO {
     private BigDecimal fondos;
     private Instant fechaapertura;
     private String tipocuenta;
-
+    private boolean activo;
 }

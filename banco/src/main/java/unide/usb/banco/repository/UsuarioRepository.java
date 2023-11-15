@@ -14,4 +14,6 @@ public interface UsuarioRepository extends JpaRepository<Usuario,Integer> {
     Optional<Usuario> findUsuarioByid(Integer id);
     Optional<Usuario> findUsuarioBydireccion(String direccion);
     Optional<Usuario> findUsuarioBycorreo(String correo);
+
+    void deleteById(Integer id);
 }

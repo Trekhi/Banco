@@ -12,6 +12,7 @@ public class CuentaMapper {
                 .fondos(cuentaDTO.getFondos())
                 .fechaapertura(cuentaDTO.getFechaapertura())
                 .tipocuenta(cuentaDTO.getTipocuenta())
+                .activo(cuentaDTO.isActivo())
                 .build();
     }
 
@@ -24,6 +25,7 @@ public class CuentaMapper {
                 .fondos(cuenta.getFondos())
                 .fechaapertura(cuenta.getFechaapertura())
                 .tipocuenta(cuenta.getTipocuenta())
+                .activo(cuenta.isActivo())
                 .build();
     }
     public static List<Cuenta> dtoToDomainList (List<CuentaDTO> cuentaDTOS){

@@ -36,4 +36,8 @@ public class Cuenta {
     @Column(nullable = false, length = 20)
     private String tipocuenta;
 
+    @Column(name = "activo")
+    private boolean activo = true; // Por defecto, el usuario está activo
+
+
 }

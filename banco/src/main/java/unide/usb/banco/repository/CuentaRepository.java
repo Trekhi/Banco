@@ -10,4 +10,5 @@ import java.util.Optional;
 public interface CuentaRepository extends JpaRepository<Cuenta, Integer> {
     //No estoy seguro
     Optional<Cuenta> findCuentaById(Integer id);
+
 }

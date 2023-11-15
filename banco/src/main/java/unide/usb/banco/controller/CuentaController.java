@@ -47,4 +47,16 @@ public class CuentaController {
         CuentaDTO cuentaDTO = CuentaMapper.domainToDto(cuenta);
         return new ResponseEntity<>(cuentaDTO, HttpStatus.OK);
     }
+
+    @DeleteMapping("/desactivar/{cuentaId}")
+    public ResponseEntity<Void> desactivarCuentaPorId(@PathVariable Integer cuentaId) {
+        return cuentaService.desactivarCuentaPorId(cuentaId);
+    }
+
+    @PatchMapping("/reactivar/{cuentaId}")
+    public ResponseEntity<Void> activarCuentaPorId(@PathVariable Integer cuentaId) {
+        return cuentaService.activarCuentaPorId(cuentaId);
+    }
+
+
 }

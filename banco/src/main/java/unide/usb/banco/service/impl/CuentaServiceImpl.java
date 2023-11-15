@@ -1,5 +1,6 @@
 package unide.usb.banco.service.impl;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import unide.usb.banco.domain.Cuenta;
 import unide.usb.banco.domain.Usuario;
@@ -73,5 +74,37 @@ public class CuentaServiceImpl implements CuentaService {
     @Override
     public List<CuentaDTO> mostrarTodos() {
         return CuentaMapper.domainToDtoList(cuentaRepository.findAll());
+    }
+
+    //Desactivar cuenta
+    @Override
+    public ResponseEntity<Void> desactivarCuentaPorId(Integer cuentaId) {
+        Optional<Cuenta> cuentaOptional = cuentaRepository.findCuentaById(cuentaId);
+
+        if (cuentaOptional.isPresent()) {
+            // Desactivar la cuenta
+            Cuenta cuenta = cuentaOptional.get();
+            cuenta.setActivo(false);
+            cuentaRepository.save(cuenta);
+
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @Override
+    public ResponseEntity <Void> activarCuentaPorId(Integer cuentaId){
+        Optional<Cuenta> cuentaOptional = cuentaRepository.findCuentaById(cuentaId);
+        if (cuentaOptional.isPresent()) {
+            // Desactivar la cuenta
+            Cuenta cuenta = cuentaOptional.get();
+            cuenta.setActivo(true);
+            cuentaRepository.save(cuenta);
+
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 }

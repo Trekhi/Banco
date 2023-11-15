@@ -1,6 +1,7 @@
 package unide.usb.banco.service.impl;
 
 import org.springframework.stereotype.Service;
+import org.webjars.NotFoundException;
 import unide.usb.banco.domain.Usuario;
 import unide.usb.banco.dto.UsuarioDTO;
 import unide.usb.banco.mapper.UsuarioMapper;
@@ -64,7 +65,45 @@ public class UsuarioServiceImpl implements UsuarioService {
 
         return UsuarioMapper.dtoToDomain(usuario);
 
-
-
     }
+
+    @Override
+    public UsuarioDTO actualizarUsuario(Integer id, UsuarioDTO usuarioDTO) {
+        Optional<Usuario> optionalUser = usuarioRepository.findById(id);
+
+        if (optionalUser.isPresent()) {
+            Usuario existingUser = optionalUser.get();
+
+            // Actualizar solo los campos que no son nulos en el DTO
+            if (usuarioDTO.getNombre() != null) {
+                existingUser.setNombre(usuarioDTO.getNombre());
+            }
+
+            if (usuarioDTO.getTelefono() != null) {
+                existingUser.setTelefono(usuarioDTO.getTelefono());
+            }
+
+            if (usuarioDTO.getDireccion() != null) {
+                existingUser.setDireccion(usuarioDTO.getDireccion());
+            }
+
+            if (usuarioDTO.getCorreo() != null) {
+                existingUser.setCorreo(usuarioDTO.getCorreo());
+            }
+
+            if (usuarioDTO.getContrasena() != null) {
+                existingUser.setContrasena(usuarioDTO.getContrasena());
+            }
+
+            // Guardar la entidad actualizada en la base de datos
+            usuarioRepository.save(existingUser);
+
+            // Convertir la entidad actualizada a DTO y devolverla
+            return UsuarioMapper.dtoToDomain(existingUser);
+        } else {
+            // El usuario con el ID proporcionado no fue encontrado
+            throw new NotFoundException("Usuario con ID " + id + " no encontrado");
+        }
+    }
+
 }
