@@ -106,4 +106,11 @@ public class UsuarioServiceImpl implements UsuarioService {
         }
     }
 
+    @Override
+    public boolean login(String correo, String contrasena) throws Exception {
+
+
+        return false;
+    }
+
 }

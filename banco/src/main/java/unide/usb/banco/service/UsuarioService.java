@@ -8,5 +8,7 @@ public interface UsuarioService {
 
     public UsuarioDTO actualizarUsuario( Integer id ,UsuarioDTO usuarioDTO) throws Exception;
 
+    public boolean login(String correo, String contrasena ) throws Exception;
+
 
 }
