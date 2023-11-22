@@ -1,0 +1,196 @@
+﻿*{
+    font-family: 'PT Sans', sans-serif;
+
+}
+
+.cont{
+    
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    background-color: #02253D;
+
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); /* Sombra del encabezado */
+
+}
+
+.icono{
+    display: flex;
+    align-items: center;
+
+}
+
+.login-sing{
+    gap: 10px;
+    display: flex;
+    align-items: center;
+
+}
+
+.principal{
+
+    margin-top: 50px;
+    border: 5px solid;
+    display: flex;
+    justify-content:space-between;
+    background: rgb(251, 251, 251);
+}
+
+.left{
+    display: grid;
+    width: 650px;
+    height: 500px;
+    padding-left: 30px;
+    border-top: 50px solid #02253D;
+    border-bottom: 50px solid #02253D; 
+}
+
+.inicio{
+    display: grid;
+    align-items: center;
+}
+
+.inicio1{
+    padding-top: 25px;
+    height: 120px;
+    display: flex;
+    justify-content: center;
+}
+
+.right{
+    display: grid;
+    height: auto;
+    width: auto;
+}
+
+/*Importante*/
+.imagen{
+    width: 800px;
+    height: 500px;
+    margin: 0 auto;
+    background-size: cover;
+    background-position: relative;
+
+    position: relative;
+    overflow: hidden;
+}
+
+.imagen:hover::after{
+    transform: translateY(0);
+}
+
+.imagen::after{
+    content: "un Colash??";
+    border: 1px solid #00153D;
+    font-size: 2rem;
+    text-align: center;
+    color: #fff;
+    background-color: #16456198;
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items:center;
+    transform: translateY(100%);
+    transition:transform .3s;
+}
+
+
+.secundario {
+    display: flex;
+    align-items: center;
+    justify-content:space-between;
+    margin: 50px;
+    gap: 50px;
+    border: solid 2px #007BFF;
+}
+
+
+.cont_imagen{
+    display: grid;
+    gap: 10px;
+}
+
+/*imagen2*/
+.imagen2{
+    width: 400px;
+    height: 500px;
+    margin: 0 auto;
+    background-size: cover;
+    background-position: relative;
+    position: relative;
+    overflow: hidden;
+
+}
+
+.imagen2:hover::after{
+    transform: translateY(0);
+}
+
+.imagen2::after{
+    content: "Probad mi suerte sucios espartanos";
+    font-size: 1rem;
+    text-align: center;
+    color: #fff;
+    background-color: #16456198;
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items:center;
+    transform: translateY(100%);
+    transition:transform .3s;
+}
+
+/*Imagen3*/
+
+.imagen3{
+    border: solid 2px #007BFF;
+    width: 500px;
+    height: 600px;
+    margin: 0 auto;
+    background-size: cover;
+    background-position: relative;
+    position: relative;
+    overflow: hidden;
+
+}
+
+.imagen3:hover::after{
+    transform: translateY(0);
+}
+
+.imagen3::after{
+    content: "Probad mi suerte sucios espartanos";
+    font-size: 1rem;
+    text-align: center;
+    color: #fff;
+    background-color: #16456198;
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items:center;
+    transform: translateY(100%);
+    transition:transform .3s;
+}
+
+/**/
+button{
+    font-size: 20px;
+    height: 40px;
+    width: 150px;
+    color: white;   
+    background: #012E46;
+    border: #fff 3px solid;
+}
+
+button:hover{
+    color: rgb(0, 0, 0);   
+    background: white;
+    border: #00153D 3px solid;
+    transition: 0.5s;
+}
+

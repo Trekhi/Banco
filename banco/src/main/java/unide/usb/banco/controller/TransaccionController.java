@@ -46,4 +46,9 @@ public class TransaccionController {
     public ResponseEntity<List<TransaccionDTO>> buscarTodas(){
         return new ResponseEntity<>(transaccionService.buscarTodas(), HttpStatus.OK);
     }
+
+    @PostMapping("/enviar-dinero")
+    public ResponseEntity<TransaccionDTO> enviar (@RequestBody TransaccionDTO transaccionDTO, Integer id) throws Exception{
+        return new ResponseEntity<>(transaccionService.mandarDinero(transaccionDTO,id), HttpStatus.OK);
+    }
 }

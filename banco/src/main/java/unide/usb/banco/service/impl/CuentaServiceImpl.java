@@ -5,8 +5,11 @@ import org.springframework.stereotype.Service;
 import unide.usb.banco.domain.Cuenta;
 import unide.usb.banco.domain.Usuario;
 import unide.usb.banco.dto.CuentaDTO;
+import unide.usb.banco.dto.TransaccionDTO;
 import unide.usb.banco.mapper.CuentaMapper;
+import unide.usb.banco.mapper.TransaccionMapper;
 import unide.usb.banco.repository.CuentaRepository;
+import unide.usb.banco.repository.TransaccionRepository;
 import unide.usb.banco.repository.UsuarioRepository;
 import unide.usb.banco.service.CuentaService;
 
@@ -21,9 +24,12 @@ public class CuentaServiceImpl implements CuentaService {
     //Depende de otra entidad
     private final UsuarioRepository usuarioRepository;
 
-    public CuentaServiceImpl(CuentaRepository cuentaRepository, UsuarioRepository usuarioRepository) {
+    private final TransaccionRepository transaccionRepository;
+
+    public CuentaServiceImpl(CuentaRepository cuentaRepository, UsuarioRepository usuarioRepository, TransaccionRepository transaccionRepository) {
         this.cuentaRepository = cuentaRepository;
         this.usuarioRepository = usuarioRepository;
+        this.transaccionRepository = transaccionRepository;
     }
 
     @Override
@@ -105,6 +111,17 @@ public class CuentaServiceImpl implements CuentaService {
             return ResponseEntity.noContent().build();
         } else {
             return ResponseEntity.notFound().build();
+        }
+    }
+
+    @Override
+    public List<TransaccionDTO> mostrarTransacciones(Integer cuentaId){
+        Optional<Cuenta> cuentaOptional = cuentaRepository.findCuentaById(cuentaId);
+        if (cuentaOptional.isPresent()){
+            return TransaccionMapper.domainToDtoList(transaccionRepository.findTransaccionByCuentaId(cuentaId));
+        }
+        else{
+            return null;
         }
     }
 }

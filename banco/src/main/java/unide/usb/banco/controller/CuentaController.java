@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import unide.usb.banco.domain.Cuenta;
 import unide.usb.banco.dto.CuentaDTO;
+import unide.usb.banco.dto.TransaccionDTO;
 import unide.usb.banco.mapper.CuentaMapper;
 import unide.usb.banco.repository.CuentaRepository;
 import unide.usb.banco.service.CuentaService;
@@ -58,5 +59,9 @@ public class CuentaController {
         return cuentaService.activarCuentaPorId(cuentaId);
     }
 
+    @GetMapping("/transacciones/{cuentaId}")
+    public ResponseEntity<List<TransaccionDTO>> mostrarTransacciones(@PathVariable Integer cuentaId){
+        return new ResponseEntity<>(cuentaService.mostrarTransacciones(cuentaId), HttpStatus.OK);
+    }
 
 }
