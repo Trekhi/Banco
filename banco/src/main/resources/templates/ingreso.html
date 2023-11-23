@@ -24,7 +24,7 @@
             <a>Blog</a>
             <a>Contactanos</a>
             <div class="login">
-                <button th:src="@{/home}" >Cerrar Sesión</button>
+                <button onclick="window.location.href='/home'" >Cerrar Sesión</button>
             </div>
         </div>
     </div>
@@ -58,31 +58,21 @@
         </tr>
         </thead>
         <tbody>
-        <tr>
-            <td>Usuario 1</td>
-            <td>45000</td>
-            <td>2023-01-01</td>
-        </tr>
-        <tr>
-            <td>Usuario 2</td>
-            <td>45000</td>
-            <td>2023-01-02</td>
-        </tr>
-
-        <tr>
-            <td>Usuario 2</td>
-            <td>45000</td>
-            <td>2023-01-02</td>
-        </tr>
-        <tr>
-            <td>Usuario 2</td>
-            <td>45000</td>
-            <td>2023-01-02</td>
+        <!-- Verifica si hay transacciones disponibles -->
+        <th:if test="${transacciones.size() == 0}">
+            <tr>
+                <td colspan="3">No hay transacciones disponibles.</td>
+            </tr>
+        </th:if>
+        <!-- Itera sobre las transacciones y muestra la información en la tabla -->
+        <tr th:each="transaccion : ${transacciones}">
+            <td th:text="${transaccion.cuentaId}"></td>
+            <td th:text="${transaccion.consignacion}"></td>
+            <td th:text="${transaccion.fechaenvio}"></td>
         </tr>
         </tbody>
     </table>
 </div>
-
 <!-- Botones de transferencia, eliminar, actualizar, entre otros -->
 <div class="botones">
     <div class="transf">
@@ -92,7 +82,7 @@
         <button>Eliminar Cuenta</button>
     </div>
     <div class="actualizar">
-        <button>Actualizar Cuenta</button>
+        <button onclick="window.location.href='/actualizar'" >Actualizar Cuenta</button>
     </div>
     <div class="extra">
         <button>Solicitar prestamos</button>

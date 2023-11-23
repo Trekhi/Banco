@@ -6,14 +6,19 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import unide.usb.banco.domain.Cuenta;
 import unide.usb.banco.dto.CuentaDTO;
+import unide.usb.banco.dto.TransaccionDTO;
 import unide.usb.banco.dto.UsuarioDTO;
+import unide.usb.banco.mapper.TransaccionMapper;
 import unide.usb.banco.repository.UsuarioRepository;
 import unide.usb.banco.service.CuentaService;
 import unide.usb.banco.service.UsuarioService;
 
 import java.math.BigDecimal;
 import java.time.Instant;
+import java.util.List;
+import java.util.Optional;
 
 
 @Controller
@@ -65,10 +70,11 @@ public class HomeController {
             /*Para acceder ala cuenta*/
             UsuarioDTO usuarioDTO = usuarioService.obtenerPorCorreo(correo);
             CuentaDTO cuentaDTO = cuentaService.obtenerCuenta(usuarioDTO);
-            System.out.println(usuarioDTO);
-            System.out.println(cuentaDTO);
+            List<TransaccionDTO> transacciones = cuentaService.mostrarTransacciones(cuentaDTO.getId());
+
             redirectAttributes.addFlashAttribute("cuentaU", cuentaDTO);
             redirectAttributes.addFlashAttribute("nombre", usuarioDTO.getNombre());
+            redirectAttributes.addFlashAttribute("transacciones", transacciones);
 
             return "redirect:/ingreso";
         } catch (Exception e) {
@@ -80,10 +86,27 @@ public class HomeController {
     public String ingreso(Model model){
         String nombreUsuario = (String) model.getAttribute("nombre");
         CuentaDTO cuentaDTO = (CuentaDTO) model.asMap().get("cuentaU");
+        List<TransaccionDTO> transacciones = (List<TransaccionDTO>) model.asMap().get("transacciones");
         model.addAttribute("nombre", nombreUsuario);
         model.addAttribute("cuentaU", cuentaDTO );
+        model.addAttribute("transacciones", transacciones);
 
         return "ingreso";
     }
+
+    /*PARA ACTUALIZAR*/
+    @RequestMapping("/actualizar")
+    public String actualizar(){
+        return "actualizar";
+    }
+
+    @PostMapping("/update")
+    public String retornar(@ModelAttribute UsuarioDTO usuarioDTO ) throws Exception {
+
+        usuarioService.actualizarUsuario(1,usuarioDTO);
+
+        return "redirect:/home";
+    }
+
 
 }

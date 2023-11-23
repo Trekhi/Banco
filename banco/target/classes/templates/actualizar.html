@@ -10,10 +10,11 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 
+
 <header>
     <div class="primary">
         <div class="logo">
-            <img th:src="@{img/MUNICH.png}" alt="Casa sólida" width="120" height="90">
+            <img th:src="@{img\MUNICH.png}" alt="Casa sólida" width="120" height="90">
             <h3 style="color:rgb(0, 0, 0);">Banco Munich</h3>
         </div>
 
@@ -24,76 +25,45 @@
             <a>Blog</a>
             <a>Contactanos</a>
             <div class="login">
-                <button onclick="window.location.href='/home'" >Cerrar Sesión</button>
+                <button>Cerrar Sesión</button>
             </div>
         </div>
     </div>
 </header>
 
 <body>
-<!-- Ingreso de usuario e información -->
-<div class="bienvenido">
-    <div style="background: #7498b6; padding: 20px; color:#021d34" class="User">
-        <h5>Bienvenido de nuevo</h5>
-        <h5 th:text="${nombre}">Usuario</h5>
-    </div>
-    <div style="background: #557996; color:#021d34" class="dinero">
-        <h5>Cuenta</h5>
-        <h5 th:text="${cuentaU.tipocuenta}" >Ahorros </h5>
-    </div>
-    <div style="background: #7498b6; color:#021d34" class="dinero">
-        <h5>Saldo disponible</h5>
-        <h5 th:text="${cuentaU.fondos}" >DINERO </h5>
-    </div>
+
+<div class="container mt-5 mb-5">
+    <h2>Actualizar información</h2>
+    <form th:action="@{/update}" method="post">
+        <div class="form-group">
+            <label for="nombre">Nombre:</label>
+            <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Ingresa tu nombre">
+        </div>
+
+        <div class="form-group">
+            <label for="telefono">Teléfono:</label>
+            <input type="text" class="form-control" id="telefono" name="telefono" placeholder="Ingrese tu teléfono">
+        </div>
+
+        <div class="form-group">
+            <label for="direccion">Dirección:</label>
+            <input type="text" class="form-control" id="direccion" name="direccion" placeholder="Ingresa tu dirección">
+        </div>
+
+        <div class="form-group">
+            <label for="email">Correo electrónico:</label>
+            <input type="email" class="form-control" id="email" name="correo" placeholder="Ingresa tu correo electrónico">
+        </div>
+
+        <button type="submit">Enviar</button>
+    </form>
 </div>
 
-<!-- Aspectos registro de transacciones y ahorros -->
-<div class="centrar">
-    <table>
-        <thead>
-        <tr>
-            <th>CUENTA</th>
-            <th>CANTIDAD</th>
-            <th>FECHA DE ENVIO</th>
-        </tr>
-        </thead>
-        <tbody>
-        <!-- Verifica si hay transacciones disponibles -->
-        <th:if test="${transacciones.size() == 0}">
-            <tr>
-                <td colspan="3">No hay transacciones disponibles.</td>
-            </tr>
-        </th:if>
-        <!-- Itera sobre las transacciones y muestra la información en la tabla -->
-        <tr th:each="transaccion : ${transacciones}">
-            <td th:text="${transaccion.cuentaId}"></td>
-            <td th:text="${transaccion.consignacion}"></td>
-            <td th:text="${transaccion.fechaenvio}"></td>
-        </tr>
-        </tbody>
-    </table>
-</div>
-<!-- Botones de transferencia, eliminar, actualizar, entre otros -->
-<div class="botones">
-    <div class="transf">
-        <button>Transferir</button>
-    </div>
-    <div class="desactivar">
-        <button>Eliminar Cuenta</button>
-    </div>
-    <div class="actualizar">
-        <button onclick="window.location.href='/actualizar'" >Actualizar Cuenta</button>
-    </div>
-    <div class="extra">
-        <button>Solicitar prestamos</button>
-    </div>
-</div>
-
-<!-- Footer -->
 <footer>
     <div class="uno">
         <div class="icono">
-            <img th:src="@{img/MUNICH-completo.png}" alt="Casa sólida" width="150" height="120">
+            <img th:src="@{img\MUNICH-completo.png}" alt="Casa sólida" width="150" height="120">
         </div>
         <div class="enlaces">
             <h5>ENLACES</h5>
@@ -116,24 +86,29 @@
                 <li style="display:inline-block;">Elemento 3</li>
             </ul>
         </div>
+
         <div class="informacion">
             <h5>OBTEN MÁS INFORMACIÓN</h5>
             <form>
-                <input placeholder="Nombre" type="text" id="nombre" name="nombre" required>
+                <input placeholder="Nombre" type="text" id="nombr" name="nombr" required>
                 <br>
-                <input placeholder="Correo" type="email" id="correo" name="correo" required>
+                <input placeholder="Correo" type="email" id="corre" name="corre" required>
                 <br>
                 <input type="submit" value="Enviar">
             </form>
         </div>
     </div>
+
 </footer>
 
-<!-- Derechos de autor -->
 <div class="derechos">
     <p>All right reserved 2023</p>
 </div>
-<!--Estilos-->
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
 <style>
 
     /*Header*/
@@ -159,73 +134,6 @@
     }
 
 
-    /*Ingreso*/
-
-    .bienvenido{
-        padding: 10px;
-        display: flex;
-        justify-content:space-evenly;
-        align-items: center;
-
-
-    }
-
-    .bienvenido::before {
-        height: 100%;
-        width: 33.33%;
-        left: 0;
-    }
-
-    .bienvenido::after {
-
-        height: 100%;
-        width: 33.33%;
-        left: 33.33%;
-    }
-
-    .bienvenido div {
-        height: 100%;
-        width: 33.33%;
-        left: 66.66%;
-    }
-
-
-
-    .dinero{
-        padding: 20px;
-        display: grid;
-        width: auto;
-        height: auto;
-
-    }
-
-    /*Transacciones*/
-
-    .centrar{
-        padding: 20px;
-        display: flex;
-        justify-content: center;
-
-    }
-
-
-    table {
-        border-collapse: collapse;
-        width: 70%;
-        margin-top: 20px;
-    }
-
-    th, td {
-        border: 1px solid #dddddd;
-        text-align: center;
-        padding: 8px;
-    }
-
-    th {
-        background-color: #f2f2f2;
-    }
-
-    /*BOTONES*/
 
     .botones{
 
@@ -335,9 +243,5 @@
 
 
 
-<!-- Tus scripts -->
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
