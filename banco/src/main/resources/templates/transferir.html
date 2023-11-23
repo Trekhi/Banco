@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,6 +9,8 @@
     <link href="https://fonts.googleapis.com/css2?family=PT+Sans:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
+
+<body>
 
 <header>
     <div class="primary">
@@ -24,72 +26,63 @@
             <a>Blog</a>
             <a>Contactanos</a>
             <div class="login">
-                <button onclick="window.location.href='/home'" >Cerrar Sesión</button>
+                <button>Cerrar Sesión</button>
             </div>
         </div>
     </div>
 </header>
 
-<body>
-<!-- Ingreso de usuario e información -->
-<div class="bienvenido">
-    <div style="background: #7498b6; padding: 20px; color:#021d34" class="User">
-        <h5>Bienvenido de nuevo</h5>
-        <h5 th:text="${nombre}">Usuario</h5>
-    </div>
-    <div style="background: #557996; color:#021d34" class="dinero">
-        <h5>Cuenta</h5>
-        <h5 th:text="${cuentaU.tipocuenta}" >Ahorros </h5>
-    </div>
-    <div style="background: #7498b6; color:#021d34" class="dinero">
-        <h5>Saldo disponible</h5>
-        <h5 th:text="${cuentaU.fondos}" >DINERO </h5>
+<!-- FORM Y SALDO. -->
+
+<div class="container mt-5 mb-5">
+    <div class="row">
+        <!-- Columna para el formulario -->
+        <div class="col-md-6">
+            <h2>Transferir Dinero</h2>
+            <form th:action="@{/transf}"  method="post">
+                <div class="form-group">
+                    <label for="cuenta">Numero de cuenta:</label>
+                    <input type="text" class="form-control" id="cuenta" name="cuentaId" placeholder="Ingresa tu numero de cuenta">
+                </div>
+
+                <div class="form-group">
+                    <label for="consignación">Consignación:</label>
+                    <input type="text" class="form-control" id="consignación" name="consignacion" placeholder="Ingrese el monto a consignar">
+                </div>
+
+                <div class="form-group">
+                    <label for="fecha">Fecha de envio:</label>
+                    <input type="datetime-local" class="form-control" id="fecha" placeholder="YYYY-MM-DDTHH:mm">
+                </div>
+
+                <div class="form-group">
+                    <label for="cuenta1">Numero de cuenta-1:</label>
+                    <input type="text" class="form-control" id="cuenta1" name="id" placeholder="Ingresa el número de cuenta">
+                </div>
+
+                <button type="submit">Enviar</button>
+            </form>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title">Información Cuenta</h3>
+                    <p class="card-text">Nombre del propietario: <span th:text="${usuarioDTO.nombre}"></span></p>
+                    <p class="card-text">Tipo de cuenta: <span th:text="${cuentaDTO.tipocuenta}"></span></p>
+                    <p class="card-text">Numero de cuenta: <span th:text="${cuentaDTO.usuarioId}"></span></p>
+                    <p class="card-text">Saldo Registrado: <span th:text="${cuentaDTO.fondos}"></span></p>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <img th:src="@{img/cubos-100.jpg}" alt="Casa sólida" class="w-100" height="200">
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
-<!-- Aspectos registro de transacciones y ahorros -->
-<div class="centrar">
-    <table>
-        <thead>
-        <tr>
-            <th>CUENTA</th>
-            <th>CANTIDAD</th>
-            <th>FECHA DE ENVIO</th>
-        </tr>
-        </thead>
-        <tbody>
-        <!-- Verifica si hay transacciones disponibles -->
-        <th:if test="${transacciones.size() == 0}">
-            <tr>
-                <td colspan="3">No hay transacciones disponibles.</td>
-            </tr>
-        </th:if>
-        <!-- Itera sobre las transacciones y muestra la información en la tabla -->
-        <tr th:each="transaccion : ${transacciones}">
-            <td th:text="${transaccion.cuentaId}"></td>
-            <td th:text="${transaccion.consignacion}"></td>
-            <td th:text="${transaccion.fechaenvio}"></td>
-        </tr>
-        </tbody>
-    </table>
-</div>
-<!-- Botones de transferencia, eliminar, actualizar, entre otros -->
-<div class="botones">
-    <div class="transf">
-        <button onclick="window.location.href='/transferir'" >Transferir</button>
-    </div>
-    <div class="desactivar">
-        <button>Eliminar Cuenta</button>
-    </div>
-    <div class="actualizar">
-        <button onclick="window.location.href='/actualizar'" >Actualizar Cuenta</button>
-    </div>
-    <div class="extra">
-        <button>Solicitar prestamos</button>
-    </div>
-</div>
-
-<!-- Footer -->
 <footer>
     <div class="uno">
         <div class="icono">
@@ -116,10 +109,11 @@
                 <li style="display:inline-block;">Elemento 3</li>
             </ul>
         </div>
+
         <div class="informacion">
             <h5>OBTEN MÁS INFORMACIÓN</h5>
             <form>
-                <input placeholder="Nombre" type="text" id="nombre" name="nombre" required>
+                <input placeholder="Nombre" type="text" id="nombre" name="nombre"  required>
                 <br>
                 <input placeholder="Correo" type="email" id="correo" name="correo" required>
                 <br>
@@ -129,11 +123,14 @@
     </div>
 </footer>
 
-<!-- Derechos de autor -->
 <div class="derechos">
     <p>All right reserved 2023</p>
 </div>
-<!--Estilos-->
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
 <style>
 
     /*Header*/
@@ -159,73 +156,6 @@
     }
 
 
-    /*Ingreso*/
-
-    .bienvenido{
-        padding: 10px;
-        display: flex;
-        justify-content:space-evenly;
-        align-items: center;
-
-
-    }
-
-    .bienvenido::before {
-        height: 100%;
-        width: 33.33%;
-        left: 0;
-    }
-
-    .bienvenido::after {
-
-        height: 100%;
-        width: 33.33%;
-        left: 33.33%;
-    }
-
-    .bienvenido div {
-        height: 100%;
-        width: 33.33%;
-        left: 66.66%;
-    }
-
-
-
-    .dinero{
-        padding: 20px;
-        display: grid;
-        width: auto;
-        height: auto;
-
-    }
-
-    /*Transacciones*/
-
-    .centrar{
-        padding: 20px;
-        display: flex;
-        justify-content: center;
-
-    }
-
-
-    table {
-        border-collapse: collapse;
-        width: 70%;
-        margin-top: 20px;
-    }
-
-    th, td {
-        border: 1px solid #dddddd;
-        text-align: center;
-        padding: 8px;
-    }
-
-    th {
-        background-color: #f2f2f2;
-    }
-
-    /*BOTONES*/
 
     .botones{
 
@@ -333,11 +263,5 @@
 
 </style>
 
-
-
-<!-- Tus scripts -->
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

@@ -14,6 +14,7 @@ import unide.usb.banco.dto.UsuarioDTO;
 import unide.usb.banco.mapper.TransaccionMapper;
 import unide.usb.banco.repository.UsuarioRepository;
 import unide.usb.banco.service.CuentaService;
+import unide.usb.banco.service.TransaccionService;
 import unide.usb.banco.service.UsuarioService;
 
 import java.math.BigDecimal;
@@ -28,11 +29,13 @@ public class HomeController {
 
     private UsuarioService usuarioService;
     private CuentaService cuentaService;
+    private TransaccionService transaccionService;
 
     // Constructor para inyección de dependencias
-    public HomeController(UsuarioService usuarioService , CuentaService cuentaService) {
+    public HomeController(UsuarioService usuarioService , CuentaService cuentaService, TransaccionService transaccionService) {
         this.usuarioService = usuarioService;
         this.cuentaService = cuentaService;
+        this.transaccionService = transaccionService;
     }
 
     @RequestMapping("/home")
@@ -77,6 +80,8 @@ public class HomeController {
             redirectAttributes.addFlashAttribute("nombre", usuarioDTO.getNombre());
             redirectAttributes.addFlashAttribute("transacciones", transacciones);
             session.setAttribute("tempUsuario", usuarioDTO);
+            session.setAttribute("tempCuenta", cuentaDTO);
+
 
             return "redirect:/ingreso";
         } catch (Exception e) {
@@ -105,12 +110,33 @@ public class HomeController {
     @PostMapping("/update")
     public String retornar(@ModelAttribute UsuarioDTO usuarioDTO, RedirectAttributes redirectAttributes, HttpSession session ) throws Exception {
         UsuarioDTO usuarioDTO1 = (UsuarioDTO) session.getAttribute("tempUsuario");
-        System.out.println(usuarioDTO1); /*Ya puedo obtener los datos ahora solo falta */
+        System.out.println(usuarioDTO1); /*Ya puedo obtener los datos ahora solo falta revisar actualizaUsuario */
 
         usuarioService.actualizarUsuario(1,usuarioDTO);
         session.removeAttribute("tempUsuario");
         return "redirect:/home";
     }
 
+    /* PARA TRANSFERIR*/
+    @RequestMapping("/transferir")
+    public String transf(HttpSession session, Model model){
+        UsuarioDTO usuarioDTO1 = (UsuarioDTO) session.getAttribute("tempUsuario");
+        CuentaDTO cuentaDTO1 = (CuentaDTO) session.getAttribute("tempCuenta");
+
+        model.addAttribute("usuarioDTO", usuarioDTO1);
+        model.addAttribute("cuentaDTO", cuentaDTO1);
+
+        return  "transferir";
+    }
+
+    @PostMapping("/transf")
+    public String enviar(@ModelAttribute TransaccionDTO transaccionDTO, @RequestParam Integer id) throws Exception {
+        Instant now = Instant.now();
+        transaccionDTO.setFechaenvio(now);
+        System.out.println(transaccionDTO);
+        
+        transaccionService.mandarDinero(transaccionDTO, id);
+        return "redirect:/home";
+    }
 
 }
