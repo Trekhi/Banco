@@ -1,5 +1,6 @@
 package unide.usb.banco.controller;
 
+import jakarta.servlet.http.HttpSession;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -65,16 +66,17 @@ public class HomeController {
 
     /*VERIFICAR USUARIO*/
     @PostMapping("/log")
-    public String obtenerUsuarioPorCorreo(@RequestParam String correo, RedirectAttributes redirectAttributes) {
+    public String obtenerUsuarioPorCorreo(@RequestParam String correo, RedirectAttributes redirectAttributes, HttpSession session) {
         try {
             /*Para acceder ala cuenta*/
             UsuarioDTO usuarioDTO = usuarioService.obtenerPorCorreo(correo);
             CuentaDTO cuentaDTO = cuentaService.obtenerCuenta(usuarioDTO);
             List<TransaccionDTO> transacciones = cuentaService.mostrarTransacciones(cuentaDTO.getId());
-
+            UsuarioDTO usuarioDTO1 = (UsuarioDTO) session.getAttribute("tempUsuario");
             redirectAttributes.addFlashAttribute("cuentaU", cuentaDTO);
             redirectAttributes.addFlashAttribute("nombre", usuarioDTO.getNombre());
             redirectAttributes.addFlashAttribute("transacciones", transacciones);
+            session.setAttribute("tempUsuario", usuarioDTO);
 
             return "redirect:/ingreso";
         } catch (Exception e) {
@@ -101,10 +103,12 @@ public class HomeController {
     }
 
     @PostMapping("/update")
-    public String retornar(@ModelAttribute UsuarioDTO usuarioDTO ) throws Exception {
+    public String retornar(@ModelAttribute UsuarioDTO usuarioDTO, RedirectAttributes redirectAttributes, HttpSession session ) throws Exception {
+        UsuarioDTO usuarioDTO1 = (UsuarioDTO) session.getAttribute("tempUsuario");
+        System.out.println(usuarioDTO1); /*Ya puedo obtener los datos ahora solo falta */
 
         usuarioService.actualizarUsuario(1,usuarioDTO);
-
+        session.removeAttribute("tempUsuario");
         return "redirect:/home";
     }
 
