@@ -5,19 +5,28 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import unide.usb.banco.dto.CuentaDTO;
 import unide.usb.banco.dto.UsuarioDTO;
 import unide.usb.banco.repository.UsuarioRepository;
+import unide.usb.banco.service.CuentaService;
 import unide.usb.banco.service.UsuarioService;
+
+import java.math.BigDecimal;
+import java.time.Instant;
+
 
 @Controller
 public class HomeController {
 
 
     private UsuarioService usuarioService;
+    private CuentaService cuentaService;
 
     // Constructor para inyección de dependencias
-    public HomeController(UsuarioService usuarioService) {
+    public HomeController(UsuarioService usuarioService , CuentaService cuentaService) {
         this.usuarioService = usuarioService;
+        this.cuentaService = cuentaService;
     }
 
     @RequestMapping("/home")
@@ -27,17 +36,21 @@ public class HomeController {
 
     @RequestMapping(path = "/signup")
     public String sign(){
-        return "sing-up";
+        return "login";
     }
 
+    /*CREAR USUARIO*/
     @PostMapping("/singup")
     public String procesarFormulario(@ModelAttribute UsuarioDTO usuarioDTO, Model model) {
         try {
             // Llamar al servicio para guardar el usuario
             UsuarioDTO usuarioDTO1 = usuarioService.guardarNuevoUsuario(usuarioDTO);
             System.out.println(usuarioDTO1);
-            // Redirigir a la página de inicio después de guardar el usuario
-            return "redirect:/";
+            model.addAttribute("nombre", usuarioDTO1.getNombre());
+            CuentaDTO cuentaDTO1 = new CuentaDTO( usuarioDTO.getId(), new BigDecimal("10000.00"), Instant.now(), "Cuenta Corriente", true);
+            cuentaService.guardarNuevaCuenta(cuentaDTO1);
+            model.addAttribute("cuentaDTO1", cuentaDTO1);
+            return "login";
         } catch (Exception e) {
             // Manejar el error según sea necesario
             model.addAttribute("error", "Error al procesar el formulario");
@@ -45,27 +58,32 @@ public class HomeController {
         }
     }
 
+    /*VERIFICAR USUARIO*/
+    @PostMapping("/log")
+    public String obtenerUsuarioPorCorreo(@RequestParam String correo, RedirectAttributes redirectAttributes) {
+        try {
+            /*Para acceder ala cuenta*/
+            UsuarioDTO usuarioDTO = usuarioService.obtenerPorCorreo(correo);
+            CuentaDTO cuentaDTO = cuentaService.obtenerCuenta(usuarioDTO);
+            System.out.println(usuarioDTO);
+            System.out.println(cuentaDTO);
+            redirectAttributes.addFlashAttribute("cuentaU", cuentaDTO);
+            redirectAttributes.addFlashAttribute("nombre", usuarioDTO.getNombre());
 
-
-    /*
-    @RequestMapping(path = "/singup", method = RequestMethod.POST)
-    public String crear(@ModelAttribute UsuarioDTO usuarioDTO, Model model) throws Exception {
-        System.out.println(usuarioDTO);
-        return "redirect:login";
+            return "redirect:/ingreso";
+        } catch (Exception e) {
+            return "redirect:/home";
+        }
     }
-    */
 
-    /*
-    @GetMapping({"/", "/greeting"})
-    public String greeting(@RequestParam(name="name", required=false, defaultValue="World") String name, Model model) {
-        model.addAttribute("name", name);
-        return "index";
+    @RequestMapping("/ingreso")
+    public String ingreso(Model model){
+        String nombreUsuario = (String) model.getAttribute("nombre");
+        CuentaDTO cuentaDTO = (CuentaDTO) model.asMap().get("cuentaU");
+        model.addAttribute("nombre", nombreUsuario);
+        model.addAttribute("cuentaU", cuentaDTO );
+
+        return "ingreso";
     }
 
-    @GetMapping({"/nose"})
-    public String prueba(@RequestParam(name="name", required=false, defaultValue="World") String name, Model model) {
-        model.addAttribute("name", name);
-        return "dos";
-    }
-    */
 }

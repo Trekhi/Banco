@@ -6,6 +6,7 @@ import unide.usb.banco.domain.Cuenta;
 import unide.usb.banco.domain.Usuario;
 import unide.usb.banco.dto.CuentaDTO;
 import unide.usb.banco.dto.TransaccionDTO;
+import unide.usb.banco.dto.UsuarioDTO;
 import unide.usb.banco.mapper.CuentaMapper;
 import unide.usb.banco.mapper.TransaccionMapper;
 import unide.usb.banco.repository.CuentaRepository;
@@ -76,6 +77,30 @@ public class CuentaServiceImpl implements CuentaService {
         return CuentaMapper.domainToDto(cuenta);
 
     }
+
+    @Override
+    public CuentaDTO obtenerCuenta(UsuarioDTO usuarioDTO) throws Exception {
+        Optional<Cuenta> cuentaOptional = cuentaRepository.findCuentaById(usuarioDTO.getId());
+
+        if (cuentaOptional.isEmpty()) {
+            throw new Exception(String.format("No se encuentra registrada la cuenta con ID: %d", usuarioDTO.getId()));
+        }
+
+        // Obtén la cuenta desde el Optional
+        Cuenta cuenta = cuentaOptional.get();
+
+        // Crea una instancia de CuentaDTO y asigna los valores
+        CuentaDTO cuentaDTO = new CuentaDTO();
+        cuentaDTO.setId(cuenta.getId());
+        cuentaDTO.setUsuarioId(cuenta.getUsuario().getId());
+        cuentaDTO.setFondos(cuenta.getFondos());
+        cuentaDTO.setFechaapertura(cuenta.getFechaapertura());
+        cuentaDTO.setTipocuenta(cuenta.getTipocuenta());
+        cuentaDTO.setActivo(cuenta.isActivo());
+
+        return cuentaDTO;
+    }
+
 
     @Override
     public List<CuentaDTO> mostrarTodos() {

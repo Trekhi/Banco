@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=PT+Sans:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+
+<header>
+    <div class="primary">
+        <div class="logo">
+            <img th:src="@{img/MUNICH.png}" alt="Casa sólida" width="120" height="90">
+            <h3 style="color:rgb(0, 0, 0);">Banco Munich</h3>
+        </div>
+
+        <div class="servicios">
+            <a>Inicio</a>
+            <a>Servicios</a>
+            <a>Nosotros</a>
+            <a>Blog</a>
+            <a>Contactanos</a>
+            <div class="login">
+                <button th:src="@{/home}" >Cerrar Sesión</button>
+            </div>
+        </div>
+    </div>
+</header>
+
+<body>
+<!-- Ingreso de usuario e información -->
+<div class="bienvenido">
+    <div style="background: #7498b6; padding: 20px; color:#021d34" class="User">
+        <h5>Bienvenido de nuevo</h5>
+        <h5 th:text="${nombre}">Usuario</h5>
+    </div>
+    <div style="background: #557996; color:#021d34" class="dinero">
+        <h5>Cuenta</h5>
+        <h5 th:text="${cuentaU.tipocuenta}" >Ahorros </h5>
+    </div>
+    <div style="background: #7498b6; color:#021d34" class="dinero">
+        <h5>Saldo disponible</h5>
+        <h5 th:text="${cuentaU.fondos}" >$ DINERO</h5>
+    </div>
+</div>
+
+<!-- Aspectos registro de transacciones y ahorros -->
+<div class="centrar">
+    <table>
+        <thead>
+        <tr>
+            <th>CUENTA</th>
+            <th>CANTIDAD</th>
+            <th>FECHA DE ENVIO</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>Usuario 1</td>
+            <td>45000</td>
+            <td>2023-01-01</td>
+        </tr>
+        <tr>
+            <td>Usuario 2</td>
+            <td>45000</td>
+            <td>2023-01-02</td>
+        </tr>
+
+        <tr>
+            <td>Usuario 2</td>
+            <td>45000</td>
+            <td>2023-01-02</td>
+        </tr>
+        <tr>
+            <td>Usuario 2</td>
+            <td>45000</td>
+            <td>2023-01-02</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- Botones de transferencia, eliminar, actualizar, entre otros -->
+<div class="botones">
+    <div class="transf">
+        <button>Transferir</button>
+    </div>
+    <div class="desactivar">
+        <button>Eliminar Cuenta</button>
+    </div>
+    <div class="actualizar">
+        <button>Actualizar Cuenta</button>
+    </div>
+    <div class="extra">
+        <button>Solicitar prestamos</button>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer>
+    <div class="uno">
+        <div class="icono">
+            <img th:src="@{img/MUNICH-completo.png}" alt="Casa sólida" width="150" height="120">
+        </div>
+        <div class="enlaces">
+            <h5>ENLACES</h5>
+            <ul>
+                <li>Elemento 1</li>
+                <li>Elemento 2</li>
+                <li>Elemento 3</li>
+                <li>Elemento 1</li>
+                <li>Elemento 2</li>
+                <li>Elemento 3</li>
+            </ul>
+        </div>
+    </div>
+    <div class="dos">
+        <div class="redes">
+            <h5>REDES SOCIALES</h5>
+            <ul style="list-style-type:none; padding:0;">
+                <li style="display:inline-block; margin-right:10px;">Elemento 1</li>
+                <li style="display:inline-block; margin-right:10px;">Elemento 2</li>
+                <li style="display:inline-block;">Elemento 3</li>
+            </ul>
+        </div>
+        <div class="informacion">
+            <h5>OBTEN MÁS INFORMACIÓN</h5>
+            <form>
+                <input placeholder="Nombre" type="text" id="nombre" name="nombre" required>
+                <br>
+                <input placeholder="Correo" type="email" id="correo" name="correo" required>
+                <br>
+                <input type="submit" value="Enviar">
+            </form>
+        </div>
+    </div>
+</footer>
+
+<!-- Derechos de autor -->
+<div class="derechos">
+    <p>All right reserved 2023</p>
+</div>
+<!--Estilos-->
+<style>
+
+    /*Header*/
+    .primary{
+        display: flex;
+        border-bottom: 3px solid #16456198;
+        padding: 20px;
+        justify-content: space-between;
+
+    }
+
+    .logo{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .servicios{
+        display:flex;
+        justify-content: center;
+        align-items: center;
+        gap:20px;
+    }
+
+
+    /*Ingreso*/
+
+    .bienvenido{
+        padding: 10px;
+        display: flex;
+        justify-content:space-evenly;
+        align-items: center;
+
+
+    }
+
+    .bienvenido::before {
+        height: 100%;
+        width: 33.33%;
+        left: 0;
+    }
+
+    .bienvenido::after {
+
+        height: 100%;
+        width: 33.33%;
+        left: 33.33%;
+    }
+
+    .bienvenido div {
+        height: 100%;
+        width: 33.33%;
+        left: 66.66%;
+    }
+
+
+
+    .dinero{
+        padding: 20px;
+        display: grid;
+        width: auto;
+        height: auto;
+
+    }
+
+    /*Transacciones*/
+
+    .centrar{
+        padding: 20px;
+        display: flex;
+        justify-content: center;
+
+    }
+
+
+    table {
+        border-collapse: collapse;
+        width: 70%;
+        margin-top: 20px;
+    }
+
+    th, td {
+        border: 1px solid #dddddd;
+        text-align: center;
+        padding: 8px;
+    }
+
+    th {
+        background-color: #f2f2f2;
+    }
+
+    /*BOTONES*/
+
+    .botones{
+
+        display: flex;
+        justify-content:space-evenly;
+        margin: 70px;
+
+    }
+
+    /*FOOTER*/
+
+    footer{
+        padding: 20px;
+        display: flex;
+        border-top: 1cap solid #153F59;
+        background: #164561;
+        justify-content: space-evenly;
+        color: #c3c3c3;
+
+    }
+
+    .uno{
+
+        display: flex;
+        gap: 50px;
+        align-items: center;
+
+    }
+
+    .dos{
+
+        display: flex;
+        gap: 50px;
+
+    }
+
+    .derechos{
+
+        display: flex;
+        justify-content: center;
+        text-align: center;
+        background: #153F59;
+        padding: 5px;
+        font-size: 20px;
+
+    }
+
+
+    /*ETIQUETAS*/
+    button{
+        font-size: 14px;
+        height: 40px;
+        border-radius: 12px ;
+        width: 150px;
+        color: white;
+        background: #012E46;
+        border: #fff 2px solid;
+    }
+
+    button:hover{
+        color: rgb(0, 0, 0);
+        background: white;
+        border: #00153D 2px solid;
+        transition: 0.5s;
+    }
+
+    .info p{
+        color: white;
+    }
+
+    input {
+        margin: 5px;
+        border-radius: 5px;
+        height: 35px;
+        width: 280px;
+        padding: 8px;
+        box-sizing: border-box;
+        margin-bottom: 10px;
+        transition: border-color 0.3s;
+      }
+
+      input:hover {
+        border-color: #3498db; /* Cambia el color del borde al pasar el mouse */
+      }
+
+      /* Efecto al enfocar en el input */
+      input:focus {
+        outline: none; /* Elimina el contorno predeterminado al enfocar */
+        border-color: #2ecc71; /* Cambia el color del borde al enfocar */
+         /* Agrega una sombra al enfocar */
+      }
+
+      input[type="submit"] {
+        background-color: #012E46;
+        color: #fff;
+        cursor: pointer;
+        transition: background-color 0.3s; /* Agrega una transición al color de fondo */
+      }
+
+      /* Efecto al pasar el mouse sobre el botón de enviar */
+      input[type="submit"]:hover {
+        color: black;
+        background-color: #fff; /* Cambia el color de fondo al pasar el mouse */
+      }
+
+</style>
+
+
+
+<!-- Tus scripts -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

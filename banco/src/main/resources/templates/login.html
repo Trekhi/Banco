@@ -26,11 +26,11 @@
                                     <img th:src="@{img/MUNICH-completo.png}" style="width: 185px;" alt="logo">
                                 </div>
 
-                                <form th:action="@{/login}" method="post">
+                                <form th:action="@{/log}" method="post">
 
                                     <div class="form-outline mb-4">
                                         <label class="form-label" for="form2Example11">Correo Electronico</label>
-                                        <input type="email" id="form2Example11" class="form-control"
+                                        <input type="email" id="form2Example11" name="correo" class="form-control"
                                                placeholder="Ingrese el correo electronico" />
                                     </div>
 

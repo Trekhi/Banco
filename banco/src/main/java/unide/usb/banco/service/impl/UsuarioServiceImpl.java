@@ -107,10 +107,20 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     @Override
-    public boolean login(String correo, String contrasena) throws Exception {
+    public UsuarioDTO obtenerPorCorreo(String correo) throws Exception {
+        Optional<Usuario> optionalUser = usuarioRepository.findUsuarioBycorreo(correo);
+        if (optionalUser.isPresent()) {
+            Usuario usuario = optionalUser.get();
+            UsuarioDTO usuarioDTO = new UsuarioDTO();
+            usuarioDTO.setCorreo(usuario.getCorreo());
+            usuarioDTO.setNombre(usuario.getNombre());
+            usuarioDTO.setId(usuario.getId());
+            return usuarioDTO;
+        } else {
+            throw new Exception("Usuario no encontrado");
+        }
 
-
-        return false;
     }
+
 
 }

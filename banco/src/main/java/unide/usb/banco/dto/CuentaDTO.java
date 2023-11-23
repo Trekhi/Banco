@@ -22,4 +22,13 @@ public class CuentaDTO {
     private Instant fechaapertura;
     private String tipocuenta;
     private boolean activo;
+
+    // Constructor con parámetros (sin incluir el ID, ya que se generará automáticamente)
+    public CuentaDTO(Integer usuarioId, BigDecimal fondos, Instant fechaApertura, String tipoCuenta, boolean activo) {
+        this.usuarioId = usuarioId;
+        this.fondos = fondos;
+        this.fechaapertura = fechaApertura;
+        this.tipocuenta = tipoCuenta;
+        this.activo = activo;
+    }
 }
