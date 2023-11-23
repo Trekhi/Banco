@@ -134,7 +134,7 @@ public class HomeController {
         Instant now = Instant.now();
         transaccionDTO.setFechaenvio(now);
         System.out.println(transaccionDTO);
-        
+
         transaccionService.mandarDinero(transaccionDTO, id);
         return "redirect:/home";
     }
