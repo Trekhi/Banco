@@ -1,0 +1,38 @@
+create user daniel with encrypted password '34521';
+create database base with owner daniel;
+
+-- Tabla de Usuarios
+CREATE TABLE Usuarios (
+    ID SERIAL PRIMARY KEY,
+    Nombre VARCHAR(50) NOT NULL,
+    Telefono VARCHAR(15) NOT NULL,
+    Direccion VARCHAR(100) NOT NULL,
+    Correo VARCHAR(50) NOT NULL,
+    Contrasena VARCHAR(100) NOT NULL
+);
+
+-- Tabla de Cuentas
+CREATE TABLE Cuentas (
+    ID SERIAL PRIMARY KEY,
+    Usuario_ID INT NOT NULL,
+    Fondos DECIMAL(18, 2) NOT NULL,
+    FechaApertura DATE NOT NULL,
+    TipoCuenta VARCHAR(20) NOT NULL,
+    FOREIGN KEY (Usuario_ID) REFERENCES Usuarios(ID)
+);
+
+-- Tabla de Transacciones
+CREATE TABLE Transacciones (
+    ID SERIAL PRIMARY KEY,
+    Cuenta_ID INT NOT NULL,
+    Consignacion DECIMAL(18, 2) NOT NULL,
+    FechaEnvio DATE NOT NULL,
+    FOREIGN KEY (Cuenta_ID) REFERENCES Cuentas(ID)
+);
+
+sys or SYSTEMN AND PDBADMIN
+34521
+
+USUARIO postgres
+CONTRASEÑA 34521
+
